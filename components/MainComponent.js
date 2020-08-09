@@ -4,20 +4,28 @@ import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
-// Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Import StyleSheet, Text, ScrollView & Image
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
-// Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Import DrawerItems
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
-// Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Import Icon
 import { Icon } from 'react-native-elements';
-// Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Import SafeAreaView
 import SafeAreaView from 'react-native-safe-area-view';
+// Week 2: Exercise 4 - Using Redux in React Native - Import connect 
+import { connect } from 'react-redux';
+// Week 2: Exercise 4 - Using Redux in React Native - Import thunk ActionCreators
+import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators'
+
+// Week 2: Exercise 4 - Using Redux in React Native - Create dispatch Object
+const mapDispatchToProps = {
+  fetchCampsites,
+  fetchComments,
+  fetchPromotions,
+  fetchPartners
+};
+
 
 const AboutNavigator = createStackNavigator(
   {
     About: { screen: About },
   },
-  // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Set AboutNavigator Options
   {
     navigationOptions: ({navigation}) => ({
       headerStyle: {
@@ -27,13 +35,10 @@ const AboutNavigator = createStackNavigator(
       headerTitleStyle: {
         color: '#fff'
       },
-      // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create Icon
       headerLeft: <Icon
         name='info-circle'
         type='font-awesome'
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - styles.stackIcon is a custom style 
         iconStyle={styles.stackIcon}
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Makes icon interactive
         onPress={() => navigation.toggleDrawer()}
       />
     })
@@ -44,7 +49,6 @@ const ContactNavigator = createStackNavigator(
   {
     Contact: { screen: Contact },
   },
-  // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Set ContactNavigator Options
   {
     navigationOptions: ({navigation}) => ({
       headerStyle: {
@@ -54,13 +58,10 @@ const ContactNavigator = createStackNavigator(
       headerTitleStyle: {
         color: '#fff'
       },
-      // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create Icon
       headerLeft: <Icon
         name='address-card'
         type='font-awesome'
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - styles.stackIcon is a custom style 
         iconStyle={styles.stackIcon}
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Makes icon interactive
         onPress={() => navigation.toggleDrawer()}
       />
     })
@@ -69,18 +70,13 @@ const ContactNavigator = createStackNavigator(
 
 const DirectoryNavigator = createStackNavigator(
   {
-    // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Set Options just for DirectoryNavigator
     Directory: { 
       screen: Directory,
-      // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create navigation function
       navigationOptions: ({navigation}) => ({
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create Icon
         headerLeft: <Icon
           name='list'
           type='font-awesome'
-          // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - styles.stackIcon is a custom style 
           iconStyle={styles.stackIcon}
-          // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Makes icon interactive
           onPress={() => navigation.toggleDrawer()}
         />
       })
@@ -105,7 +101,6 @@ const HomeNavigator = createStackNavigator(
   {
     Home: { screen: Home }
   },
-  // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Set HomeNavigator Options
   {
     navigationOptions: ({navigation}) => ({
       headerStyle: {
@@ -115,20 +110,16 @@ const HomeNavigator = createStackNavigator(
       headerTitleStyle: {
         color: '#fff'
       },
-      // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create Icon
       headerLeft: <Icon
         name='home'
         type='font-awesome'
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - styles.stackIcon is a custom style 
         iconStyle={styles.stackIcon}
-        // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Makes icon interactive
         onPress={() => navigation.toggleDrawer()}
       />
     })
   }
 );
 
-// Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - CustomDrawer Component
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView
@@ -148,7 +139,6 @@ const CustomDrawerContentComponent = props => (
 )
 
 const MainNavigator = createDrawerNavigator(
-  // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Set navigation options for each screen 
   {
     Home: {
       screen: HomeNavigator,
@@ -207,13 +197,20 @@ const MainNavigator = createDrawerNavigator(
   },
   {
     drawerBackgroundColor: '#CEC8FF',
-    // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Connect the custom component to DrawerNavigator
     contentComponent: CustomDrawerContentComponent
   }
 
 );
 
 class Main extends Component {
+
+  // Week 2: Exercise 4 - Using Redux in React Native - Call ActionCreators after component is created 
+  componentDidMount() {
+    this.props.fetchCampsites();
+    this.props.fetchComments();
+    this.props.fetchPromotions();
+    this.props.fetchPartners();
+  }
   render() {
     return (
       <View style={{
@@ -226,7 +223,6 @@ class Main extends Component {
   }
 }
 
-  // Week 2 - Exercise 2: Navigation Icons and Custom Side Drawer - Create StyleSheet
   const styles = StyleSheet.create({
     container: {
       flex: 1
@@ -256,4 +252,4 @@ class Main extends Component {
     }
   });
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);

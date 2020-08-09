@@ -7,15 +7,15 @@ import { promotions } from './promotions';
 import { partners } from './partners';
 
 export const ConfigureStore = () => {
-    const store = createStore(
-        combineReducers({
-            campsites,
-            comments,
-            partners,
-            promotions
-        }),
-        applyMiddleware(thunk, logger)
-    );
+  const store = createStore(
+    combineReducers({
+      campsites,
+      comments,
+      partners,
+      promotions
+    }),
+    applyMiddleware(thunk, logger)
+  );
 
-    return store;
+  return store;
 }
