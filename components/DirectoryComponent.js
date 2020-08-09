@@ -14,7 +14,7 @@ class Directory extends Component {
 
   static navigationOptions = {
     title: 'Directory'
-  };
+  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -23,8 +23,8 @@ class Directory extends Component {
         <ListItem
           title={item.name}
           subtitle={item.description}
-          onPress={() => navigate('CampsiteInfo', { campsiteId: item.id})}
-          leftAvatar={{source: require('./images/react-lake.jpg')}}
+          onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+          leftAvatar={{ source: require('./images/react-lake.jpg') }}
         />
       );
     };
@@ -39,4 +39,4 @@ class Directory extends Component {
   }
 }
 
-export default Directory
+export default Directory;

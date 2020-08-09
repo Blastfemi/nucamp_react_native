@@ -28,7 +28,7 @@ class Home extends Component {
       campsites: CAMPSITES,
       partners: PARTNERS,
       promotions: PROMOTIONS
-    }
+    };
   }
   static navigationOptions = {
     title: 'Home'

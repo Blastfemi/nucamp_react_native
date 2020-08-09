@@ -14,9 +14,10 @@ function RenderCampsite({campsite}) {
         </Text>
       </Card>
     );
-  } 
+  }
   return <View />;
 }
+
 class CampsiteInfo extends Component {
 
   constructor(props) {
@@ -36,6 +37,5 @@ class CampsiteInfo extends Component {
     return <RenderCampsite campsite={campsite} />;
   }
 }
-
 
 export default CampsiteInfo;
