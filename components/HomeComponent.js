@@ -5,6 +5,8 @@ import { Card } from 'react-native-elements';
 // Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+// Week 2: Exercise 6 - Activity Indicator - import Loading Component
+import Loading from './LoadingComponent';
 
 // Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
@@ -15,8 +17,24 @@ const mapStateToProps = state => {
   };
 };
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
-function RenderItem({item}) {
+// Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
+function RenderItem(props) {
+  const {item} = props;
+
+
+  // Week 2: Exercise 6 - Activity Indicator - Returning Loading Indicator
+  if (props.isLoading) {
+    return <Loading />;
+  }
+
+  // Week 2: Exercise 6 - Activity Indicator - Return Error Message
+  if (props.errMess) {
+    return (
+      <View>
+        <Text>{props.errMess}</Text>
+      </View>
+    );
+  }
   if (item) {
     return (
       <Card
@@ -52,11 +70,20 @@ class Home extends Component {
     return (
       <ScrollView>
         <RenderItem
-          item={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]} />
+          item={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
+          isLoading={this.props.campsites.isLoading}
+          errMess={this.props.campsites.errMess}
+        />
         <RenderItem
-          item={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]} />
+          item={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]}
+          isLoading={this.props.promotions.isLoading}
+          errMess={this.props.promotions.errMess}
+        />
         <RenderItem
-          item={this.props.partners.partners.filter(partner => partner.featured)[0]} />
+          item={this.props.partners.partners.filter(partner => partner.featured)[0]}
+          isLoading={this.props.partners.isLoading}
+          errMess={this.props.partners.errMess}
+        />
       </ScrollView>
     );
   }

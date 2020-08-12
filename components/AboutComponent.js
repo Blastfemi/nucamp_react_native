@@ -5,6 +5,8 @@ import { Card, ListItem } from 'react-native-elements';
 // Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+// Week 2: Exercise 6 - Activity Indicator - import Loading Component
+import Loading from './LoadingComponent';
 
 // Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
@@ -17,7 +19,7 @@ function Mission() {
   return (
     <Card title='Our Mission'>
       <Text style={{margin: 10}}>
-      We present a curated database of the best campsites in the vast woods and backcountry of the World Wide Web Wilderness. We increase access to adventure for the public while promoting safe and respectful use of resources. The expert wilderness trekkers on our staff personally verify each campsite to make sure that they are up to our standards. We also present a platform for campers to share reviews on campsites they have visited with each other.
+        We present a curated database of the best campsites in the vast woods and backcountry of the World Wide Web Wilderness. We increase access to adventure for the public while promoting safe and respectful use of resources. The expert wilderness trekkers on our staff personally verify each campsite to make sure that they are up to our standards. We also present a platform for campers to share reviews on campsites they have visited with each other.
       </Text>
     </Card>
   );
@@ -33,7 +35,7 @@ class About extends Component {
   //   };
   // }
 
-  static navigationOptions ={
+  static navigationOptions = {
     title: 'About Us'
   }
 
@@ -49,6 +51,29 @@ class About extends Component {
       );
     };
 
+    // Week 2: Exercise 6 - Activity Indicator - Returning Loading Indicator
+    if (this.props.partners.isLoading) {
+      return (
+        <ScrollView>
+          <Mission />
+          <Card title='Community Partners'>
+            <Loading />
+          </Card>
+        </ScrollView>
+      );
+    }
+
+    // Week 2: Exercise 6 - Activity Indicator - Return Error Message
+    if (this.props.partners.errMess) {
+      return (
+        <ScrollView>
+        <Mission />
+        <Card title='Community Partners'>
+          <Text>{this.props.partners.errMess}</Text>
+        </Card>
+      </ScrollView>
+      );
+    }
     // Week 2: Exercise 4 - Using Redux in React Native - Update props reference
     return (
       <ScrollView>
@@ -57,7 +82,7 @@ class About extends Component {
           <FlatList
             data={this.props.partners.partners}
             renderItem={renderPartner}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item=>item.id.toString()}
           />
         </Card>
       </ScrollView>
