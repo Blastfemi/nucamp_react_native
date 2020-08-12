@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-// Week 2: Exercise 6 - Activity Indicator - import View component
 import { FlatList } from 'react-native';
-// Week 2: Exercise 4 - Using Redux in React Native - Switch ListItem for Tile
 import { Tile } from 'react-native-elements';
-// Week 2: Exercise 4 - Using Redux in React Native - Remove CAMPSITES import
-// Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-// Week 2: Exercise 6 - Activity Indicator - import Loading Component
 import Loading from './LoadingComponent';
 
-// Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
   return {
     campsites: state.campsites
@@ -19,19 +13,10 @@ const mapStateToProps = state => {
 
 class Directory extends Component {
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Remove constructor that was used by local state
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     campsites: CAMPSITES
-  //   };
-  // }
-
   static navigationOptions = {
     title: 'Directory'
   }
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Switch ListItem for Tile
   render() {
     const { navigate } = this.props.navigation;
     const renderDirectoryItem = ({item}) => {
@@ -46,12 +31,10 @@ class Directory extends Component {
       );
     };
 
-    // Week 2: Exercise 6 - Activity Indicator - Returning Loading Indicator
     if (this.props.campsites.isLoading) {
       return <Loading />;
     }
 
-    // Week 2: Exercise 6 - Activity Indicator - Return Error Message
     if (this.props.campsites.errMess) {
       return (
         <View>
@@ -60,7 +43,6 @@ class Directory extends Component {
       );
     }
 
-    // Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
     return (
       <FlatList
         data={this.props.campsites.campsites}
@@ -71,5 +53,4 @@ class Directory extends Component {
   }
 }
 
-// Week 2: Exercise 4 - Using Redux in React Native - Connect to redux store
 export default connect(mapStateToProps)(Directory);

@@ -8,12 +8,9 @@ import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-nativ
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
-// Week 2: Exercise 4 - Using Redux in React Native - Import connect 
 import { connect } from 'react-redux';
-// Week 2: Exercise 4 - Using Redux in React Native - Import thunk ActionCreators
 import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
 
-// Week 2: Exercise 4 - Using Redux in React Native - Create dispatch Object
 const mapDispatchToProps = {
   fetchCampsites,
   fetchComments,
@@ -204,7 +201,6 @@ const MainNavigator = createDrawerNavigator(
 
 class Main extends Component {
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Call ActionCreators after component is created 
   componentDidMount() {
     this.props.fetchCampsites();
     this.props.fetchComments();

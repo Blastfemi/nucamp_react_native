@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
-// Week 2: Exercise 4 - Using Redux in React Native - Remove CAMPSITES & COMMENTS import
-// Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import { postFavorite } from '../redux/ActionCreators';
 
-// Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
   return {
     campsites: state.campsites,
-    comments: state.comments
+    comments: state.comments,
+    favorites: state.favorites
   };
+};
+
+const mapDispatchToProps = {
+  postFavorite: campsiteId => (postFavorite(campsiteId))
 };
 
 function RenderCampsite(props) {
@@ -21,7 +24,6 @@ function RenderCampsite(props) {
 
   if (campsite) {
 
-    // Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
     return (
       <Card
         featuredTitle={campsite.name}
@@ -68,15 +70,8 @@ function RenderComments({comments}) {
 
 class CampsiteInfo extends Component {
 
-   // Week 2: Exercise 4 - Using Redux in React Native - Remove constructors that was used by local state
-  constructor(props) {
-    super(props);
-    this.state = {
-      favorite: false
-    };
-  }
-  markFavorite() {
-    this.setState({favorite: true});
+  markFavorite(campsiteId) {
+    this.props.postFavorite(campsiteId);
   }
   static navigationOptions = {
     title: 'Campsite Information'
@@ -84,15 +79,14 @@ class CampsiteInfo extends Component {
 
   render() {
 
-    // Week 2: Exercise 4 - Using Redux in React Native - Update props reference
     const campsiteId = this.props.navigation.getParam('campsiteId');
     const campsite = this.props.campsites.campsites.filter(campsite => campsite.id === campsiteId)[0];
     const comments = this.props.comments.comments.filter(comment => comment.campsiteId === campsiteId);
     return (
       <ScrollView>
         <RenderCampsite campsite={campsite}
-          favorite={this.state.favorite}
-          markFavorite={() => this.markFavorite()}
+          favorite={this.props.favorites.includes(campsiteId)}
+          markFavorite={() => this.markFavorite(campsiteId)}
         />
         <RenderComments comments={comments} />
       </ScrollView>
@@ -100,5 +94,4 @@ class CampsiteInfo extends Component {
   }
 }
 
-// Week 2: Exercise 4 - Using Redux in React Native - Connect to redux store
-export default connect(mapStateToProps)(CampsiteInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(CampsiteInfo);

@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
-// Week 2: Exercise 4 - Using Redux in React Native - Remove CAMPSITES PROMOTIONS & PARTNERS import
-// Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-// Week 2: Exercise 6 - Activity Indicator - import Loading Component
 import Loading from './LoadingComponent';
 
-// Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
   return {
     campsites: state.campsites,
@@ -17,17 +13,13 @@ const mapStateToProps = state => {
   };
 };
 
-// Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
 function RenderItem(props) {
   const {item} = props;
 
-
-  // Week 2: Exercise 6 - Activity Indicator - Returning Loading Indicator
   if (props.isLoading) {
     return <Loading />;
   }
 
-  // Week 2: Exercise 6 - Activity Indicator - Return Error Message
   if (props.errMess) {
     return (
       <View>
@@ -52,20 +44,10 @@ function RenderItem(props) {
 
 class Home extends Component {
 
-   // Week 2: Exercise 4 - Using Redux in React Native - Remove constructor that was used by local state
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     campsites: CAMPSITES,
-  //     partners: PARTNERS,
-  //     promotions: PROMOTIONS
-  //   };
-  // }
   static navigationOptions = {
     title: 'Home'
   }
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Update props reference
   render() {
     return (
       <ScrollView>

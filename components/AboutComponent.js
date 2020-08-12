@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
-// Week 2: Exercise 4 - Using Redux in React Native - Remove PARTNERS import
-// Week 2: Exercise 4 - Using Redux in React Native - connect & baseUrl
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-// Week 2: Exercise 6 - Activity Indicator - import Loading Component
 import Loading from './LoadingComponent';
 
-// Week 2: Exercise 4 - Using Redux in React Native - Define the part of state we are using
 const mapStateToProps = state => {
   return {
     partners: state.partners
@@ -27,19 +23,10 @@ function Mission() {
 
 class About extends Component {
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Remove constructor that was used by local state
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     partners: PARTNERS
-  //   };
-  // }
-
   static navigationOptions = {
     title: 'About Us'
   }
 
-  // Week 2: Exercise 4 - Using Redux in React Native - Update image source to use baseUrl + relative image path to retrieve correct image fo reach partner
   render() {
     const renderPartner = ({item}) => {
       return (
@@ -51,7 +38,6 @@ class About extends Component {
       );
     };
 
-    // Week 2: Exercise 6 - Activity Indicator - Returning Loading Indicator
     if (this.props.partners.isLoading) {
       return (
         <ScrollView>
@@ -63,7 +49,6 @@ class About extends Component {
       );
     }
 
-    // Week 2: Exercise 6 - Activity Indicator - Return Error Message
     if (this.props.partners.errMess) {
       return (
         <ScrollView>
@@ -74,7 +59,7 @@ class About extends Component {
       </ScrollView>
       );
     }
-    // Week 2: Exercise 4 - Using Redux in React Native - Update props reference
+
     return (
       <ScrollView>
         <Mission />
@@ -90,7 +75,6 @@ class About extends Component {
   }
 }
 
-// Week 2: Exercise 4 - Using Redux in React Native - Connect to redux store
 export default connect(mapStateToProps)(About);
 
 
