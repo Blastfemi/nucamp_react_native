@@ -13,5 +13,6 @@ export const PARTNERS_LOADING = 'PARTNERS_LOADING';
 export const ADD_PARTNERS = 'ADD_PARTNERS';
 export const PARTNERS_FAILED = 'PARTNERS_FAILED';
 
-// Week 2: Exercise 6 - Redux Adding Favorites - Create an ActionType
 export const ADD_FAVORITE = 'ADD_FAVORITE';
+
+export const ADD_COMMENT = 'ADD_COMMENT';

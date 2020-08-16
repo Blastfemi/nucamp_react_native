@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet } from 'react-native';
-import { Card, Icon, Input, Rating } from 'react-native-elements';
+import { Card, Icon, Input, Rating, PricingCard } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import { postFavorite } from '../redux/ActionCreators';
+import { postFavorite, postComment } from '../redux/ActionCreators';
+
 
 const mapStateToProps = state => {
   return {
@@ -14,7 +15,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  postFavorite: campsiteId => (postFavorite(campsiteId))
+  postFavorite: campsiteId => (postFavorite(campsiteId)),
+  postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
 };
 
 function RenderCampsite(props) {
@@ -63,6 +65,8 @@ function RenderComments({comments}) {
       <View style={{margin: 10}}>
         <Text style={{fontSize: 14}}>{item.text}</Text>
         <Rating
+          type='star'
+          fractions={0}
           startingValue={item.rating}
           imageSize={10}
           style={{alignItems: 'flex-start', paddingVertical: '5%'}}
@@ -101,7 +105,7 @@ class CampsiteInfo extends Component {
   }
 
   handleComment(campsiteId) {
-    console.log(JSON.stringify(this.state));
+    this.props.postComment(campsiteId, this.state.rating, this.state.author, this.state.text)
     this.toggleModal();
   }
 
@@ -142,6 +146,8 @@ class CampsiteInfo extends Component {
           <View style={styles.modal}>
             <Rating
               showRating
+              type='star'
+              fractions={0}
               startingValue={this.state.rating}
               imageSize={40}
               onFinishRating={(rating) => this.setState({rating: rating})}
@@ -173,14 +179,16 @@ class CampsiteInfo extends Component {
               }
               value={this.state.text}
             />
-            <Button
-              title='Submit'
-              color='#5637DD'
-              onPress={() => {
-                  this.handleComment(campsiteId);
-                  this.resetForm();
-              }}
-            />
+            <View style={{margin: 10}}>
+              <Button
+                title='Submit'
+                color='#5637DD'
+                onPress={() => {
+                    this.handleComment(campsiteId);
+                    this.resetForm();
+                }}
+              />
+            </View>
             <View style={{margin: 10}}>
               <Button
                 onPress={() => {
@@ -188,7 +196,7 @@ class CampsiteInfo extends Component {
                   this.resetForm();
                 }}
                 color='#808080'
-                title='Close'
+                title='Cancel'
               />
             </View>
           </View>
