@@ -6,7 +6,6 @@ import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
 
-
 const mapStateToProps = state => {
   return {
     campsites: state.campsites,
@@ -49,7 +48,7 @@ function RenderCampsite(props) {
             {
               text: 'OK',
               onPress: () => props.favorite ?
-               console.log('Already set as a favorite') : props.markFavorite()
+              console.log('Already set as a favorite') : props.markFavorite()
             }
           ],
           { cancelable: false }
